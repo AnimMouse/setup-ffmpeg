@@ -1,0 +1,49 @@
+name: Setup FFmpeg action
+description: Setup/Install FFmpeg for GitHub Actions
+branding:
+  icon: play
+  color: green
+inputs:
+  version:
+    description: FFmpeg version
+    default: stable
+    
+runs:
+  using: composite
+  steps:
+    - name: Get FFmpeg version for Unix-like
+      id: version-unix-like
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash
+      run: $GITHUB_ACTION_PATH/scripts/version/Unix-like.sh
+      env:
+        version: ${{ inputs.version }}
+        
+    - name: Get FFmpeg version for Windows
+      id: version-windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: '& $env:GITHUB_ACTION_PATH\scripts\version\Windows.ps1'
+      env:
+        version: ${{ inputs.version }}
+        
+    - name: Download FFmpeg for Unix-like
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash
+      working-directory: ${{ runner.temp }}
+      run: $GITHUB_ACTION_PATH/scripts/download/Unix-like.sh
+      env:
+        version: ${{ steps.version-unix-like.outputs.version }}
+        
+    - name: Download FFmpeg for Windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      working-directory: ${{ runner.temp }}
+      run: '& $env:GITHUB_ACTION_PATH\scripts\download\Windows.ps1'
+      env:
+        version: ${{ steps.version-windows.outputs.version }}
+        
+    - name: Install FFmpeg on tool cache
+      uses: AnimMouse/tool-cache@v1
+      with:
+        folder_name: FFmpeg

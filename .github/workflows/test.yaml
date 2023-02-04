@@ -1,0 +1,32 @@
+name: Test setup-ffmpeg
+on:
+  push:
+    paths:
+      - action.yaml
+      - scripts/**
+      - .github/workflows/test.yaml
+      
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        version: [stable, master, 5.1, 5.1.2]
+        exclude:
+          - os: ubuntu-latest
+            version: 5.1.2
+          - os: windows-latest
+            version: 5.1.2
+          - os: macos-latest
+            version: 5.1
+            
+    steps:
+      - name: Setup FFmpeg using setup-ffmpeg
+        uses: AnimMouse/setup-ffmpeg@main
+        with:
+          version: ${{ matrix.version }}
+          
+      - name: Test FFmpeg by checking version
+        run: ffmpeg -version
