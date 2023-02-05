@@ -6,7 +6,7 @@ branding:
 inputs:
   version:
     description: FFmpeg version
-    default: stable
+    default: release
     
 runs:
   using: composite

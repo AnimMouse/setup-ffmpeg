@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        version: [stable, master, 5.1, 5.1.2]
+        version: [release, master, 5.1, 5.1.2]
         exclude:
           - os: ubuntu-latest
             version: 5.1.2
