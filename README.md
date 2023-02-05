@@ -1,0 +1,68 @@
+# Setup FFmpeg for GitHub Actions
+Setup [FFmpeg](https://ffmpeg.org) on GitHub Actions to use `ffmpeg` and `ffprobe`.
+
+This action installs [FFmpeg](https://ffmpeg.org) for use in actions by installing it on tool cache using [AnimMouse/tool-cache](https://github.com/AnimMouse/tool-cache).
+
+Ubuntu and Windows builds are provided by [BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds).\
+macOS builds are provided by [evermeet.cx](https://evermeet.cx/ffmpeg/).
+
+This action is implemented as a [composite](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) action.
+
+## Usage
+### FFmpeg
+To use `ffmpeg`, run this action before `ffmpeg`.
+
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    
+  - run: ffmpeg -i in.mkv out.mkv
+```
+
+### FFprobe
+To use `ffprobe`, run this action before `ffprobe`.
+
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    
+  - run: ffprobe in.mkv
+```
+
+### Specific version
+You can specify the version you want. By default, this action downloads the latest release version.
+
+#### Latest master
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    with:
+      version: master
+```
+
+#### Specific release
+For Ubuntu and Windows, specify the major and minor version only.
+
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    with:
+      version: 5.1
+```
+
+For macOS, specify the major, minor, and patch version.
+
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    with:
+      version: 5.1.2
+```
+
+#### Similar actions
+1. [FedericoCarboni/setup-ffmpeg](https://github.com/FedericoCarboni/setup-ffmpeg)
