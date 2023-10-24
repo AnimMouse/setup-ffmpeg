@@ -13,14 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        version: [release, master, 5.1, 5.1.2]
+        version: [release, master, "${{ vars.SPECIFIED_VERSION }}", "${{ vars.SPECIFIED_VERSION_MACOS }}"]
         exclude:
           - os: ubuntu-latest
-            version: 5.1.2
+            version: ${{ vars.SPECIFIED_VERSION_MACOS }}
           - os: windows-latest
-            version: 5.1.2
+            version: ${{ vars.SPECIFIED_VERSION_MACOS }}
           - os: macos-latest
-            version: 5.1
+            version: ${{ vars.SPECIFIED_VERSION }}
             
     steps:
       - name: Setup FFmpeg using setup-ffmpeg
