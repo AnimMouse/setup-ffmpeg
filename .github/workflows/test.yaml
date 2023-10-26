@@ -30,3 +30,6 @@ jobs:
           
       - name: Test FFmpeg by checking version
         run: ffmpeg -version
+        
+      - name: Test FFprobe by checking version
+        run: ffprobe -version
