@@ -32,7 +32,7 @@ steps:
 ```
 
 ### Specific version
-You can specify the version you want. By default, this action downloads the latest release version.
+You can specify the version you want. By default, this action downloads the latest release version if version is not specified.
 
 #### Latest master
 ```yaml
@@ -44,7 +44,7 @@ steps:
 ```
 
 #### Specific release
-For Ubuntu and Windows, specify the major and minor version only.
+For Ubuntu and Windows, specify the major and minor version only. Visit [BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest) for the list of release tags.
 
 ```yaml
 steps:
@@ -54,7 +54,7 @@ steps:
       version: 5.1
 ```
 
-For macOS, specify the major, minor, and patch version.
+For macOS, specify the major, minor, and patch version. Visit [evermeet.cx](https://evermeet.cx/pub/ffmpeg/) for the list of release tags.
 
 ```yaml
 steps:
