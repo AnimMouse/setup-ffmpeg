@@ -7,6 +7,9 @@ inputs:
   version:
     description: FFmpeg version
     default: release
+  token:
+    description: GitHub token to avoid API rate limiting
+    default: ${{ github.token }}
     
 runs:
   using: composite
@@ -27,12 +30,29 @@ runs:
       env:
         version: ${{ inputs.version }}
         
+    - name: Get FFmpeg release ID for Unix-like
+      id: release-id-unix-like
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash
+      run: $GITHUB_ACTION_PATH/scripts/release-id/Unix-like.sh
+      env:
+        version: ${{ steps.version-unix-like.outputs.version }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+        
+    - name: Get FFmpeg release ID for Windows
+      id: release-id-windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: '& $env:GITHUB_ACTION_PATH\scripts\release-id\Windows.ps1'
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        
     - name: Restore FFmpeg cache
       id: cache
       uses: actions/cache/restore@v3
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
-        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ runner.os }}
+        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
         
     - name: Download FFmpeg for Unix-like
       if: (runner.os == 'Linux' || runner.os == 'macOS') && ! steps.cache.outputs.cache-hit
@@ -61,4 +81,4 @@ runs:
       uses: actions/cache/save@v3
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
-        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ runner.os }}
+        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
