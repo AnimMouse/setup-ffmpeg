@@ -64,5 +64,16 @@ steps:
       version: 5.1.2
 ```
 
+### GitHub token
+This action automatically uses a GitHub token in order to authenticate with GitHub API and avoid rate limiting. You can also specify your own read-only fine-grained personal access token.
+
+```yaml
+steps:
+  - name: Setup FFmpeg
+    uses: AnimMouse/setup-ffmpeg@v1
+    with:
+      token: ${{ secrets.GH_PAT }}
+```
+
 #### Similar actions
 1. [FedericoCarboni/setup-ffmpeg](https://github.com/FedericoCarboni/setup-ffmpeg)
