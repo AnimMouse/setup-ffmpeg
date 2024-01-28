@@ -49,7 +49,7 @@ runs:
         
     - name: Restore FFmpeg cache
       id: cache
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
         key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
@@ -78,7 +78,7 @@ runs:
         
     - name: Save FFmpeg cache
       if: '! steps.cache.outputs.cache-hit'
-      uses: actions/cache/save@v3
+      uses: actions/cache/save@v4
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
         key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
