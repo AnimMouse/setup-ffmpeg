@@ -5,6 +5,10 @@ then
   if [ $RUNNER_OS = macOS ]
   then
     latest_release=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].latest)
+    if [ "$(curl -s https://evermeet.cx/ffmpeg/info/ffmpeg/$latest_release | jq .code)" = 404 ]
+    then
+      latest_release=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].latest)
+    fi
   else
     latest_release=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].cycle)
   fi
