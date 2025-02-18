@@ -52,7 +52,7 @@ runs:
       uses: actions/cache/restore@v4
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
-        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
+        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}-${{ runner.arch }}
         
     - name: Download FFmpeg for Unix-like
       if: (runner.os == 'Linux' || runner.os == 'macOS') && ! steps.cache.outputs.cache-hit
@@ -81,4 +81,4 @@ runs:
       uses: actions/cache/save@v4
       with:
         path: ${{ runner.tool_cache }}/FFmpeg
-        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}
+        key: FFmpeg-${{ steps.version-unix-like.outputs.version || steps.version-windows.outputs.version }}-${{ steps.release-id-unix-like.outputs.release_id || steps.release-id-windows.outputs.release_id }}-${{ runner.os }}-${{ runner.arch }}
