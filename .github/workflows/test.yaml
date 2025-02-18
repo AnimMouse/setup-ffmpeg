@@ -12,15 +12,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        version: [release, master, "${{ vars.SPECIFIED_VERSION }}", "${{ vars.SPECIFIED_VERSION_MACOS }}"]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-13]
+        version: [release, master, "${{ vars.SPECIFIED_VERSION }}", "${{ vars.SPECIFIED_VERSION_MACOS }}", "${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}"]
         exclude:
           - os: ubuntu-latest
             version: ${{ vars.SPECIFIED_VERSION_MACOS }}
+          - os: ubuntu-latest
+            version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
           - os: windows-latest
             version: ${{ vars.SPECIFIED_VERSION_MACOS }}
+          - os: windows-latest
+            version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
           - os: macos-latest
             version: ${{ vars.SPECIFIED_VERSION }}
+          - os: macos-latest
+            version: ${{ vars.SPECIFIED_VERSION_MACOS }}
+          - os: macos-latest
+            version: master
+          - os: macos-13
+            version: ${{ vars.SPECIFIED_VERSION }}
+          - os: macos-13
+            version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
             
     steps:
       - name: Setup FFmpeg using setup-ffmpeg
