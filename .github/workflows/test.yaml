@@ -12,12 +12,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest, macos-13]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest, macos-13]
         version: [release, master, "${{ vars.SPECIFIED_VERSION }}", "${{ vars.SPECIFIED_VERSION_MACOS }}", "${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}"]
         exclude:
           - os: ubuntu-latest
             version: ${{ vars.SPECIFIED_VERSION_MACOS }}
           - os: ubuntu-latest
+            version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
+          - os: ubuntu-24.04-arm
+            version: ${{ vars.SPECIFIED_VERSION_MACOS }}
+          - os: ubuntu-24.04-arm
             version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
           - os: windows-latest
             version: ${{ vars.SPECIFIED_VERSION_MACOS }}
