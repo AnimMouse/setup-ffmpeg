@@ -5,11 +5,17 @@ then
   if [ $RUNNER_OS = macOS ]
   then
     latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].latest)
-    if [ "$(curl -s https://evermeet.cx/ffmpeg/info/ffmpeg/$latest_release_macos | jq .code)" = 404 ]
+    if [ $RUNNER_ARCH = ARM64 ]
     then
-      latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].latest)
+      latest_release_macos_arm64=$(basename latest_release_macos .0)
+      latest_release=${latest_release_macos_arm64/.}
+    else
+      if [ "$(curl -s https://evermeet.cx/ffmpeg/info/ffmpeg/$latest_release_macos | jq .code)" = 404 ]
+      then
+        latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].latest)
+      fi
+      latest_release=$(basename $latest_release_macos .0)
     fi
-    latest_release=$(basename $latest_release_macos .0)
   else
     latest_release=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].cycle)
   fi
