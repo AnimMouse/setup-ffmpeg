@@ -12,8 +12,8 @@ then
       echo ::error::OSXExperts.NET currently does not have macOS ARM64 master builds.
       exit 1
     else
-      wget -qO FFmpeg.zip https://www.osxexperts.net/ffmpeg${version}arm.zip
-      wget -qO FFprobe.zip https://www.osxexperts.net/ffprobe${version}arm.zip
+      wget -qO FFmpeg.zip -cw 10 --random-wait https://www.osxexperts.net/ffmpeg${version}arm.zip
+      wget -qO FFprobe.zip -cw 10 --random-wait https://www.osxexperts.net/ffprobe${version}arm.zip
     fi
   else
     ext=7z
