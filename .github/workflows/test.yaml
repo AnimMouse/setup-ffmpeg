@@ -5,7 +5,8 @@ on:
       - action.yaml
       - scripts/**
       - .github/workflows/test.yaml
-      
+  workflow_dispatch:
+  
 jobs:
   test:
     runs-on: ${{ matrix.os }}
