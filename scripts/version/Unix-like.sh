@@ -6,8 +6,13 @@ then
   then
     if [ $RUNNER_ARCH = ARM64 ]
     then
-      latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].cycle)
-      latest_release_macos_arm64=$(basename $latest_release_macos .0)
+      latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].latest)
+      latest_release_macos_arm64=${latest_release_macos%.0}
+      if [ "$(curl -sLIo /dev/null -w %{http_code} https://www.osxexperts.net/ffmpeg${latest_release_macos_arm64/.}arm.zip)" = 404 ]
+      then
+        latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].latest)
+        latest_release_macos_arm64=${latest_release_macos%.0}
+      fi
       latest_release=${latest_release_macos_arm64/.}
     else
       latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].latest)
@@ -15,7 +20,7 @@ then
       then
         latest_release_macos=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].latest)
       fi
-      latest_release=$(basename $latest_release_macos .0)
+      latest_release=${latest_release_macos%.0}
     fi
   else
     latest_release_linux=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].cycle)
