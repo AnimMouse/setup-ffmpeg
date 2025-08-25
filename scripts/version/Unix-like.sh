@@ -19,7 +19,7 @@ then
     fi
   else
     latest_release_linux=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].cycle)
-    if [ "$(curl -sLI $GITHUB_SERVER_URL/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n$latest_release_linux-latest-linux64-gpl-$latest_release_linux.tar.xz | head -n 1 | cut -d$' ' -f2)" = 404 ]
+    if [ "$(curl -sLIo /dev/null -w %{http_code} $GITHUB_SERVER_URL/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n$latest_release_linux-latest-linux64-gpl-$latest_release_linux.tar.xz)" = 404 ]
     then
       latest_release_linux=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[1].cycle)
     fi
