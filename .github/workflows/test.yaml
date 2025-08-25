@@ -5,6 +5,8 @@ on:
       - action.yaml
       - scripts/**
       - .github/workflows/test.yaml
+  schedule:
+    - cron: '7 11 1 * *'
   workflow_dispatch:
   
 jobs:
