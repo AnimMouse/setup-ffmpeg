@@ -33,7 +33,7 @@ steps:
 ```
 
 ### Specific version
-You can specify the version you want. By default, this action downloads the latest release version if version is not specified.
+You can specify the version you want. By default, this action downloads the latest release version if the version is not specified.
 
 #### Latest master
 ```yaml
@@ -64,17 +64,17 @@ steps:
   - name: Setup FFmpeg
     uses: AnimMouse/setup-ffmpeg@v1
     with:
-      version: 7.0.2
+      version: 7.1.1
 ```
 
-For macOS arm64, specify the major, minor version only without the point. Visit [OSXExperts.NET](https://osxexperts.net) for the list of release tags.
+For macOS arm64, specify the major, minor, and patch version without the point. Visit [OSXExperts.NET](https://osxexperts.net) for the list of release tags.
 
 ```yaml
 steps:
   - name: Setup FFmpeg
     uses: AnimMouse/setup-ffmpeg@v1
     with:
-      version: 71
+      version: 711
 ```
 
 ### GitHub token
