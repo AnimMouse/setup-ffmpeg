@@ -1,6 +1,8 @@
 name: Test setup-ffmpeg
 on:
   push:
+    branches:
+      - main
     paths:
       - action.yaml
       - scripts/**
@@ -15,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest, macos-13]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest, macos-15-intel]
         version: [release, master, "${{ vars.SPECIFIED_VERSION }}", "${{ vars.SPECIFIED_VERSION_MACOS }}", "${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}"]
         exclude:
           - os: ubuntu-latest
@@ -36,9 +38,9 @@ jobs:
             version: ${{ vars.SPECIFIED_VERSION_MACOS }}
           - os: macos-latest
             version: master
-          - os: macos-13
+          - os: macos-15-intel
             version: ${{ vars.SPECIFIED_VERSION }}
-          - os: macos-13
+          - os: macos-15-intel
             version: ${{ vars.SPECIFIED_VERSION_MACOS_ARM64 }}
             
     steps:
