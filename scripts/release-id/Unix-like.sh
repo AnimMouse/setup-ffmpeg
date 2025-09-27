@@ -4,7 +4,7 @@ if [ $RUNNER_OS = macOS ]
 then
   if [ $RUNNER_ARCH = ARM64 ]
   then
-    release_id=$(curl -s https://endoflife.date/api/ffmpeg.json | jq -r .[0].latest)
+    release_id=static
   else
     if [ $version = master ]
     then
