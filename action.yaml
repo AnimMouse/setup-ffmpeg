@@ -62,7 +62,6 @@ runs:
       run: $GITHUB_ACTION_PATH/scripts/download/Unix-like.sh
       env:
         version: ${{ steps.version-unix-like.outputs.version }}
-        GITHUB_TOKEN: ${{ inputs.token }}
         
     - name: Download FFmpeg for Windows
       if: runner.os == 'Windows' && ! steps.cache.outputs.cache-hit

@@ -11,7 +11,12 @@ then
       latest_release=$(curl -s https://evermeet.cx/ffmpeg/info/ffmpeg/release | jq -r .version)
     fi
   else
-    latest_release=$(gh api repos/BtbN/FFmpeg-Builds/releases/latest -q '[.assets[].name | capture("^ffmpeg-(?:n)?(?<v>[0-9]+(?:\\.[0-9]+)+)") | .v] | max_by(split(".") | map(tonumber))')
+    latest_release=$(
+      gh api repos/BtbN/FFmpeg-Builds/releases/latest -q \
+        '[.assets[].name | capture("^ffmpeg-n(?<v>[0-9]+(?:\\.[0-9]+)+)-latest-") | .v]
+         | unique
+         | max_by(split(".") | map(tonumber))'
+    )
   fi
   echo "version=$latest_release" >> $GITHUB_OUTPUT
 else

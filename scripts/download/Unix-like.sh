@@ -30,26 +30,8 @@ then
   7z e FFprobe.$ext ffprobe -oFFmpeg
   rm FFmpeg.$ext FFprobe.$ext
 else
-  if [ $RUNNER_ARCH = ARM64 ]; then arch=linuxarm64; else arch=linux64; fi
-  if [ $version = master ]
-  then
-    filename=$(
-      gh api repos/BtbN/FFmpeg-Builds/releases/latest |
-      jq -r --arg arch "$arch" '
-        .assets[].name
-        | select(startswith("ffmpeg-N-") and endswith("-\($arch)-gpl.tar.xz"))
-      '
-    )
-  else
-    filename=$(
-      gh api repos/BtbN/FFmpeg-Builds/releases/latest |
-      jq -r --arg v "$version" --arg arch "$arch" '
-        .assets[].name
-        | ($v | split(".") | .[0:2] | join(".")) as $series
-        | select(test("^ffmpeg-n\\($v)-[0-9]+-g[0-9a-f]+-\\($arch)-gpl-\\($series)\\.tar\\.xz$"))
-      '
-    )
-  fi
+  if [ $RUNNER_ARCH = ARM64 ]; then arch=arm64; else arch=64; fi
+  if [ $version = master ]; then filename=ffmpeg-master-latest-linux$arch-gpl.tar.xz; else filename=ffmpeg-n$version-latest-linux$arch-gpl-$version.tar.xz; fi
   wget -qO- $GITHUB_SERVER_URL/BtbN/FFmpeg-Builds/releases/download/latest/$filename | tar -xJC FFmpeg --strip-components 2 --no-anchored ffmpeg ffprobe
 fi
 echo ::endgroup::
