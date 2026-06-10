@@ -21,6 +21,7 @@ runs:
       run: $GITHUB_ACTION_PATH/scripts/version/Unix-like.sh
       env:
         version: ${{ inputs.version }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         
     - name: Get FFmpeg version for Windows
       id: version-windows
@@ -61,6 +62,7 @@ runs:
       run: $GITHUB_ACTION_PATH/scripts/download/Unix-like.sh
       env:
         version: ${{ steps.version-unix-like.outputs.version }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         
     - name: Download FFmpeg for Windows
       if: runner.os == 'Windows' && ! steps.cache.outputs.cache-hit
