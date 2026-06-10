@@ -30,6 +30,7 @@ runs:
       run: '& $env:GITHUB_ACTION_PATH\scripts\version\Windows.ps1'
       env:
         version: ${{ inputs.version }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         
     - name: Get FFmpeg release ID for Unix-like
       id: release-id-unix-like
